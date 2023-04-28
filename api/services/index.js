@@ -1,6 +1,8 @@
 const DepartamentoService = require('./DepartamentoService')
+const ProfessorService = require('./ProfessorService')
 
 module.exports = {
-    DepartamentoService: DepartamentoService 
+    DepartamentoService: DepartamentoService,
+    ProfessorService: ProfessorService
 }
 
