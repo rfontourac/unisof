@@ -4,9 +4,10 @@ const { DepartamentoService } = require('../services')
 const departamentoService = new DepartamentoService;
 
 class DepartamentoController {
-    static buscaTodosDepartamentos = async (req, res) => {
+    static buscaDepartamentos = async (req, res) => {
         try{
-            const todosDepartamentos = await departamentoService.buscaTodosRegistros();
+            const params = req.query;
+            const todosDepartamentos = await departamentoService.buscaRegistros(params);
             res.status(200).json(todosDepartamentos);
 
         } catch (err){

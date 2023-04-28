@@ -5,8 +5,8 @@ class Service {
         this.nomeDoModelo = nomeDoModelo;
     }
 
-    async buscaTodosRegistros() {
-        return await database[this.nomeDoModelo].findAll();
+    async buscaRegistros(where = {}) {
+        return await database[this.nomeDoModelo].findAll({where: where});
     }
 }
 

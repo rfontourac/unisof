@@ -4,7 +4,7 @@ const { Router } = require('express')
 const router = Router();
 
     router  
-        .get('/departamentos', DepartamentoController.buscaTodosDepartamentos)
+        .get('/departamentos', DepartamentoController.buscaDepartamentos)
         .post('/departamentos', DepartamentoController.criaDepartamentos)
 
 

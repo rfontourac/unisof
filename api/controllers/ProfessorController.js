@@ -4,9 +4,10 @@ const { ProfessorService } = require('../services')
 const professorService = new ProfessorService;
 
 class ProfessorController {
-    static buscaTodosProfessores = async (req, res) => {
+    static buscaProfessores = async (req, res) => {
         try{
-            const todosProfessores = await professorService.buscaTodosRegistros();
+            const params = req.query
+            const todosProfessores = await professorService.buscaRegistros(params);
             res.status(200).json(todosProfessores);
 
         } catch (err){
