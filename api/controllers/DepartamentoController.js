@@ -1,12 +1,12 @@
 const database = require('../models');
-const Service = require('../services/Service')
+const { DepartamentoService } = require('../services')
 
-const DepartamentoService = new Service('Departamentos')
+const departamentoService = new DepartamentoService;
 
 class DepartamentoController {
     static buscaTodosDepartamentos = async (req, res) => {
         try{
-            const todosDepartamentos = await DepartamentoService.buscaTodosRegistros();
+            const todosDepartamentos = await departamentoService.buscaTodosRegistros();
             res.status(200).json(todosDepartamentos);
 
         } catch (err){
