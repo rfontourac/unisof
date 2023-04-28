@@ -19,6 +19,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {model: 'Disciplinas', key: 'id'}
       },
+      idprofessor: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {model: 'Professores', key: 'id'}
+      },
+      idturma: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {model: 'Turmas', key: 'id'}
+      },
       nota: {
         type: Sequelize.FLOAT
       },

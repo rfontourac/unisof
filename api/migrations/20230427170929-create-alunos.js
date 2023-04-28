@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idturma: {
+      idcurso: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Turmas', key: 'id'}
+        references: {model: 'Cursos', key: 'id'}
       },
       nome: {
         type: Sequelize.STRING
