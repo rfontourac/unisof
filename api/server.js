@@ -1,14 +1,18 @@
-import Express from "express";
+const routes = require('./routes')
+const Express = require('express')
 
 const app = Express();
 const port = 3000;
 
-
-app.get('/', (req, res) => {
-    res.status(200).send({message: "Conexão OK."})
-})
-
+routes(app);
 
 app.listen(port, (err) => {
-    console.log(`Servidor escutando na porta ${port}`)
+    
+    if (err){
+        throw new Error(err);
+    }
+
+    console.log(`Servidor ouvindo na porta ${port}`)
+
 })
+
