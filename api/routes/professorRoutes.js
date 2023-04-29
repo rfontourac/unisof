@@ -6,6 +6,8 @@ const router = Router();
     router  
         .get('/professores', ProfessorController.buscaProfessores)
         .post('/professores', ProfessorController.criaProfessores)
+        .put('/professores/:id', ProfessorController.alteraProfessores)
+        .delete('/professores/:id', ProfessorController.excluiProfessores)
 
 
 module.exports = router;

@@ -19,7 +19,7 @@ class CursoController {
     static criaCursos = async (req, res) => {
         try{
             const novosDados = req.body;
-            const novoCurso = await database.Cursos.create(novosDados);
+            const novoCurso = await cursoService.adicionaRegistro(novosDados);
             res.status(200).json(novoCurso);
 
         } catch (err){
@@ -27,6 +27,36 @@ class CursoController {
         
         }
     }
+
+    static alteraCursos = async (req, res) => {
+        try{
+            const id = req.params.id
+            const novosDados = req.body;
+            const novoCurso = await cursoService.alteraRegistro(novosDados, id);
+            res.status(200).json(novoCurso);
+
+        } catch (err){
+            res.status(500).send(err.message);
+        
+        }
+    }
+
+    static excluiCursos = async (req, res) => {
+        try{
+            const id = req.params.id
+            await cursoService.excluiRegistro(id);
+            res.status(200).json({message: `O Curso de id ${id} foi excluído`});
+
+        } catch (err){
+            res.status(500).send(err.message);
+        
+        }
+    }
+
+    static populaCurso = async (req, res) => {
+        
+    }
+
 
 }
 

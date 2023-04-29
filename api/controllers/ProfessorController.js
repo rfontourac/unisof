@@ -19,13 +19,46 @@ class ProfessorController {
     static criaProfessores = async (req, res) => {
         try{
             const novosDados = req.body;
-            const novoProfessor = await database.Professores.create(novosDados);
+            const novoProfessor = await professorService.adicionaRegistro(novosDados);
             res.status(200).json(novoProfessor);
 
         } catch (err){
             res.status(500).send(err.message);
         
         }
+    }
+
+    static alteraProfessores = async (req, res) => {
+        try{
+            const id = req.params.id
+            const novosDados = req.body;
+            const novoProfessor = await professorService.alteraRegistro(novosDados, id);
+            res.status(200).json(novoProfessor);
+
+        } catch (err){
+            res.status(500).send(err.message);
+        
+        }
+    }
+
+    static excluiProfessores = async (req, res) => {
+        try{
+            const id = req.params.id
+            await professorService.excluiRegistro(id);
+            res.status(200).json({message: `O Professor de id ${id} foi excluído`});
+
+        } catch (err){
+            res.status(500).send(err.message);
+        
+        }
+    }
+
+    static criaTurma = async (req, res) => {
+
+    }
+
+    static avaliaAluno = async (req, res) => {
+        
     }
 
 }
