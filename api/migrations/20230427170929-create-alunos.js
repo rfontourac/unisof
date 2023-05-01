@@ -9,24 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idcurso: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {model: 'Cursos', key: 'id'}
-      },
       nome: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       telefone: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       dataformatura: {
         type: Sequelize.DATEONLY
       },
       ativo: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {

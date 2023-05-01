@@ -16,6 +16,7 @@ module.exports = {
         references: {model: 'Cursos', key: 'id'}
       },
       periodo: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -20,6 +20,7 @@ module.exports = {
         references: {model: 'Disciplinas', key: 'id'}
       },
       datainicio: {
+        allowNull: false,
         type: Sequelize.DATEONLY
       },
       createdAt: {

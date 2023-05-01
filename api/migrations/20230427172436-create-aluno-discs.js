@@ -16,6 +16,7 @@ module.exports = {
         references: {model: 'Disciplinas', key: 'id'}
       },
       qtdecursada: {
+        defaultValue: 1,
         type: Sequelize.INTEGER
       },
       createdAt: {
