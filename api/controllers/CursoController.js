@@ -54,7 +54,10 @@ class CursoController {
     }
 
     static populaCurso = async (req, res) => {
+        //recebe dois arrays, um de nome de cursos e um de periodos
+        // post /cursos/:id/populacurso
         
+
     }
 
 

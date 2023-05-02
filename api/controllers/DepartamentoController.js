@@ -26,6 +26,8 @@ class DepartamentoController {
             res.status(500).send(err.message);
         
         }
+    ///teste
+    
     }
 
     static alteraDepartamentos = async (req, res) => {
