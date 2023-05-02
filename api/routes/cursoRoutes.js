@@ -5,7 +5,9 @@ const router = Router();
 
     router  
         .get('/cursos', CursoController.buscaCursos)
+        .get('/cursos/:id/buscadisciplinas', CursoController.findDisciplinesPerCourse)
         .post('/cursos', CursoController.criaCursos)
+        .post('/cursos/:id/populacurso', CursoController.populaCurso)
         .put('/cursos/:id', CursoController.alteraCursos)
         .delete('/cursos/:id', CursoController.excluiCursos)
 

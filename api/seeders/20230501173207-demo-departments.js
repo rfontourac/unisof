@@ -3,44 +3,44 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Cursos', [
+    await queryInterface.bulkInsert('Departments', [
       {
-        nome: 'Engenharia Mecânica',
-        iddepartamento: 2,
+        name: 'Eletrônica',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Engenharia Civil',
-        iddepartamento: 3,
+        name: 'Mecânica',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Tecnologia de Telecomunicações',
-        iddepartamento: 1,
+        name: 'Civil',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Publicidade e Propaganda',
-        iddepartamento: 4,
+        name: 'Comunicação',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'História',
-        iddepartamento: 5,
+        name: 'Humanas',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Artes',
         createdAt: new Date(),
         updatedAt: new Date()
       }
 
-  ], {});
+    ], {});
     
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Cursos', null, {});
+    await queryInterface.bulkDelete('Departments', null, {});
     
   }
 };

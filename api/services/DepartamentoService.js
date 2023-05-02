@@ -3,7 +3,7 @@ const Service = require('./Service')
 
 class DepartamentoService extends Service {
     constructor(nomeDoModelo){
-        super('Departamentos')
+        super('Departments')
     }
 
 

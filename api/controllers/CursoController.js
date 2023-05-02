@@ -54,10 +54,42 @@ class CursoController {
     }
 
     static populaCurso = async (req, res) => {
-        //recebe dois arrays, um de nome de cursos e um de periodos
-        // post /cursos/:id/populacurso
-        
+        try{
+            const listas = req.body;
+            const curso = req.params.id
+            const disciplinas = listas.disciplinas
+            const periodos = listas.periodos
+            
+            if (disciplinas.length !== periodos.length){
+                throw new Error;
+            }
 
+            const listaDisciplinasCurso = await cursoService.populacurso(curso, disciplinas, periodos);
+
+            res.status(200).json(listaDisciplinasCurso);
+
+
+        } catch (erro){
+            console.log(erro)
+            res.status(400).send('Erro')
+        }
+
+    }
+
+    static findDisciplinesPerCourse = async (req, res) => {
+        const idCourse = req.params.id
+        try {
+            const disciplinesPerCourse = await cursoService.findDisciplinesPerCourse(idCourse);
+            const courseName = disciplinesPerCourse.name
+            const disciplines = disciplinesPerCourse.Disciplines.map( discipline => discipline = {disciplina: discipline.name, periodo: discipline.Course_discs.term} )
+            
+            res.status(200).json({curso: courseName, disciplinas: disciplines})
+            // res.status(200).json(disciplinesPerCourse)
+
+        } catch (erro){
+            res.status(500).json({message: "Ocorreu um erro"})
+        
+        }
     }
 
 

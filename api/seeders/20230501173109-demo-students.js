@@ -3,51 +3,51 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Alunos', [
+    await queryInterface.bulkInsert('Students', [
     {
-      nome: 'Rodrigo Centenaro',
-      telefone: '12345678',
-      ativo: true,
+      name: 'Rodrigo Centenaro',
+      phone: '12345678',
+      active: true,
       email: 'r@r.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
       {
-      nome: 'Veridiana Ramos',
-      telefone: '12345678',
-      ativo: true,
+      name: 'Veridiana Ramos',
+      phone: '12345678',
+      active: true,
       email: 'v@v.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
       {
-      nome: 'Rogerio Viana',
-      telefone: '12345678',
-      ativo: true,
+      name: 'Rogerio Viana',
+      phone: '12345678',
+      active: true,
       email: 'ro@r.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
       {
-      nome: 'Fabio Faria',
-      telefone: '12345678',
-      ativo: true,
+      name: 'Fabio Faria',
+      phone: '12345678',
+      active: true,
       email: 'Johnr@r.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
       {
-      nome: 'Carmem Lucia',
-      telefone: '12345678',
-      ativo: true,
+      name: 'Carmem Lucia',
+      phone: '12345678',
+      active: true,
       email: 'c@c.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
       {
-      nome: 'Julia Silva',
-      telefone: '12345678',
-      ativo: true,
+      name: 'Julia Silva',
+      phone: '12345678',
+      active: true,
       email: 'j@j.com',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -57,7 +57,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Alunos', null, {});
+    await queryInterface.bulkDelete('Students', null, {});
     
   }
 };

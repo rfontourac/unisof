@@ -3,69 +3,69 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Disciplinas', [
+    await queryInterface.bulkInsert('Disciplines', [
       {
-        nome: 'Fisica 1',
+        name: 'Fisica 1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Fisica 2',
+        name: 'Fisica 2',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Fisica 3',
+        name: 'Fisica 3',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Fisica 4',
+        name: 'Fisica 4',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Calculo 1',
+        name: 'Calculo 1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Calculo 2',
+        name: 'Calculo 2',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Historia do Brasil',
+        name: 'Historia do Brasil',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Historia Geral',
+        name: 'Historia Geral',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Fotografia 1',
+        name: 'Fotografia 1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Fotografia 2',
+        name: 'Fotografia 2',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Programacao 1',
+        name: 'Programacao 1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Programacao 2',
+        name: 'Programacao 2',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nome: 'Programacao 3',
+        name: 'Programacao 3',
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -75,7 +75,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Disciplinas', null, {});
+    await queryInterface.bulkDelete('Disciplines', null, {});
     
   }
 };

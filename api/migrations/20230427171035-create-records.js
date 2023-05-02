@@ -2,40 +2,40 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Historicos', {
+    await queryInterface.createTable('Records', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idaluno: {
+      StudentId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Alunos', key: 'id'}
+        references: {model: 'Students', key: 'id'}
       },
-      iddisciplina: {
+      DisciplineId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Disciplinas', key: 'id'}
+        references: {model: 'Disciplines', key: 'id'}
       },
-      idprofessor: {
+      ProfessorId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Professores', key: 'id'}
+        references: {model: 'Professors', key: 'id'}
       },
-      idturma: {
+      ClassId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Turmas', key: 'id'}
+        references: {model: 'Classes', key: 'id'}
       },
-      nota: {
+      grade: {
         type: Sequelize.FLOAT
       },
-      frequencia: {
+      attendance: {
         type: Sequelize.FLOAT
       },
-      aprovado: {
+      aprooved: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {
@@ -49,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Historicos');
+    await queryInterface.dropTable('Records');
   }
 };

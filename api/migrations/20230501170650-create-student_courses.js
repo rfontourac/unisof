@@ -2,22 +2,26 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Aluno_discs', {
-      idaluno: {
+    await queryInterface.createTable('Student_courses', {
+      StudentId: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        references: {model: 'Alunos', key: 'id'}
+        references: {model: 'Students', key: 'id'}
       },
-      iddisciplina: {
+      CourseId: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        references: {model: 'Disciplinas', key: 'id'}
+        references: {model: 'Courses', key: 'id'}
       },
-      qtdecursada: {
-        defaultValue: 1,
-        type: Sequelize.INTEGER
+      retired: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
+      },
+      graduated: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Aluno_discs');
+    await queryInterface.dropTable('Student_courses');
   }
 };
