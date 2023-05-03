@@ -76,36 +76,6 @@ class CursoController {
 
     }
 
-    static findDisciplinesPerCourse = async (req, res) => {
-        const idCourse = req.params.id
-        try {
-            const disciplinesPerCourse = await cursoService.findDisciplinesPerCourse(idCourse);
-            const courseName = disciplinesPerCourse.name
-            const disciplines = disciplinesPerCourse.Disciplines.map( discipline => discipline = {disciplina: discipline.name, periodo: discipline.Course_discs.term} )
-            
-            res.status(200).json({curso: courseName, disciplinas: disciplines})
-            
-        } catch (erro){
-            res.status(500).json({message: "Ocorreu um erro"})
-        
-        }
-    }
-
-    static findStudentsPerCourse = async (req, res) => {
-        const idCourse = req.params.id
-        try {
-            const studentsPerCourse = await cursoService.findStudentsPerCourse(idCourse);
-            const courseName = studentsPerCourse.name
-            const students = studentsPerCourse.Students.map( student => student = student.name  )
-            
-            res.status(200).json({curso: courseName, alunos: students})
-                        
-        } catch (erro){
-            console.log(erro)
-            res.status(500).json({message: "Ocorreu um erro"})
-        
-        }
-    }
     static findCourseRelations = async (req, res) => {
         const idCourse = req.params.id
         const model = req.params.model
@@ -113,12 +83,7 @@ class CursoController {
             const courseRelation = await cursoService.findCourseRelations(idCourse, model);
             const courseName = courseRelation.name
             const relations = courseRelation[model].map( student => student = student.name  )
-            // const students = studentsPerCourse.Students.map( student => student = student.name  )
-
-            // const studentsPerCourse = await cursoService.findStudentsPerCourse(idCourse);
-            // const courseName = studentsPerCourse.name
-            // const students = studentsPerCourse.Students.map( student => student = student.name  )
-            
+                        
             res.status(200).json({curso: courseName, [model]: relations})
                         
         } catch (erro){
@@ -132,3 +97,36 @@ class CursoController {
 }
 
 module.exports = CursoController
+
+
+
+// static findDisciplinesPerCourse = async (req, res) => {
+//     const idCourse = req.params.id
+//     try {
+//         const disciplinesPerCourse = await cursoService.findDisciplinesPerCourse(idCourse);
+//         const courseName = disciplinesPerCourse.name
+//         const disciplines = disciplinesPerCourse.Disciplines.map( discipline => discipline = {disciplina: discipline.name, periodo: discipline.Course_discs.term} )
+        
+//         res.status(200).json({curso: courseName, disciplinas: disciplines})
+        
+//     } catch (erro){
+//         res.status(500).json({message: "Ocorreu um erro"})
+    
+//     }
+// }
+
+// static findStudentsPerCourse = async (req, res) => {
+//     const idCourse = req.params.id
+//     try {
+//         const studentsPerCourse = await cursoService.findStudentsPerCourse(idCourse);
+//         const courseName = studentsPerCourse.name
+//         const students = studentsPerCourse.Students.map( student => student = student.name  )
+        
+//         res.status(200).json({curso: courseName, alunos: students})
+                    
+//     } catch (erro){
+//         console.log(erro)
+//         res.status(500).json({message: "Ocorreu um erro"})
+    
+//     }
+// }
