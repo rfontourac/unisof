@@ -8,19 +8,14 @@ class CursoService extends Service {
 
     async populacurso(idCourse, disciplinas, periodos){
         const disciplinasMatriculadas = [];
-        // const curso = await database[this.nomeDoModelo].findOne({where: {id: idCourse}});
+        const course = await database[this.nomeDoModelo].findOne({where: {id: idCourse}});
 
         for (let i=0; i<disciplinas.length; i++){
-            let matricula = {
-                DisciplineId: disciplinas[i],
-                CourseId: idCourse,
-                term: periodos[i]
-            }
+            
+            let disciplina = await database['Disciplines'].findOne({where: {id: disciplinas[i]}});
+            let matricula = course.addDiscipline(disciplina, { through: {term: periodos[i] } })
 
-            await database['Course_discs'].create(matricula);
-            // let matricula = curso.addDiscipline({DisciplineId: disciplinas[i], term: periodos[i]})
-
-            disciplinasMatriculadas.push(matricula);
+            disciplinasMatriculadas.push({curso: course.name, disciplina: disciplina.name, periodo: periodos[i]});
 
         }
 
@@ -28,16 +23,36 @@ class CursoService extends Service {
 
     }
 
-    async findDisciplinesPerCourse(curso){ 
+    async findCourseRelations(courseId, model){ 
         return await database[this.nomeDoModelo].findOne(
             {
                 where: {
-                    id: curso
+                    id: courseId
                 }, 
-                include: 'Disciplines'
+                include: model
             })   
     }
 
 }
 
 module.exports = CursoService
+
+// async findDisciplinesPerCourse(courseId, model){ 
+//     return await database[this.nomeDoModelo].findOne(
+//         {
+//             where: {
+//                 id: curso
+//             }, 
+//             include: 'Disciplines'
+//         })   
+// }
+
+// async findStudentsPerCourse(curso){ 
+//     return await database[this.nomeDoModelo].findOne(
+//         {
+//             where: {
+//                 id: curso
+//             }, 
+//             include: 'Students'
+//         })   
+// }

@@ -60,18 +60,18 @@ class CursoController {
             const disciplinas = listas.disciplinas
             const periodos = listas.periodos
             
-            if (disciplinas.length !== periodos.length){
+            if (disciplinas.length === periodos.length){
+                const listaDisciplinasCurso = await cursoService.populacurso(curso, disciplinas, periodos);
+                res.status(200).json(listaDisciplinasCurso);
+                
+            } else {
                 throw new Error;
             }
-
-            const listaDisciplinasCurso = await cursoService.populacurso(curso, disciplinas, periodos);
-
-            res.status(200).json(listaDisciplinasCurso);
-
 
         } catch (erro){
             console.log(erro)
             res.status(400).send('Erro')
+
         }
 
     }
@@ -84,9 +84,45 @@ class CursoController {
             const disciplines = disciplinesPerCourse.Disciplines.map( discipline => discipline = {disciplina: discipline.name, periodo: discipline.Course_discs.term} )
             
             res.status(200).json({curso: courseName, disciplinas: disciplines})
-            // res.status(200).json(disciplinesPerCourse)
-
+            
         } catch (erro){
+            res.status(500).json({message: "Ocorreu um erro"})
+        
+        }
+    }
+
+    static findStudentsPerCourse = async (req, res) => {
+        const idCourse = req.params.id
+        try {
+            const studentsPerCourse = await cursoService.findStudentsPerCourse(idCourse);
+            const courseName = studentsPerCourse.name
+            const students = studentsPerCourse.Students.map( student => student = student.name  )
+            
+            res.status(200).json({curso: courseName, alunos: students})
+                        
+        } catch (erro){
+            console.log(erro)
+            res.status(500).json({message: "Ocorreu um erro"})
+        
+        }
+    }
+    static findCourseRelations = async (req, res) => {
+        const idCourse = req.params.id
+        const model = req.params.model
+        try {
+            const courseRelation = await cursoService.findCourseRelations(idCourse, model);
+            const courseName = courseRelation.name
+            const relations = courseRelation[model].map( student => student = student.name  )
+            // const students = studentsPerCourse.Students.map( student => student = student.name  )
+
+            // const studentsPerCourse = await cursoService.findStudentsPerCourse(idCourse);
+            // const courseName = studentsPerCourse.name
+            // const students = studentsPerCourse.Students.map( student => student = student.name  )
+            
+            res.status(200).json({curso: courseName, [model]: relations})
+                        
+        } catch (erro){
+            console.log(erro)
             res.status(500).json({message: "Ocorreu um erro"})
         
         }

@@ -53,8 +53,19 @@ class AlunoController {
         }
     }
 
-    static matriculaEmCurso = (req, res) => {
+    static registerStudentInCourse = async (req, res) => {
+        try {
+            const studentId = req.body.studentId
+            const courseId = req.body.courseId
 
+            const alunoMatriculado = await alunoService.registerStudentToCourse(studentId, courseId)
+            res.status(200).send(alunoMatriculado);
+            
+
+        } catch (erro){
+            res.status(500).json({message: "Ocorreu um erro"})
+        }
+    
     }
 
     static matriculaEmDisciplina = (req, res) => {
