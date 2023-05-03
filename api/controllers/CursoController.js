@@ -53,23 +53,23 @@ class CursoController {
         }
     }
 
-    static populaCurso = async (req, res) => {
+    static populateCourse = async (req, res) => {
         try{
-            const listas = req.body;
-            const curso = req.params.id
-            const disciplinas = listas.disciplinas
-            const periodos = listas.periodos
+            const lists = req.body;
+            const course = req.params.id
+            const disciplines = lists.disciplinas
+            const terms = lists.periodos
             
-            if (disciplinas.length === periodos.length){
-                const listaDisciplinasCurso = await cursoService.populacurso(curso, disciplinas, periodos);
-                res.status(200).json(listaDisciplinasCurso);
+            if (disciplines.length === terms.length){
+                const courseDisciplineList = await cursoService.populateCourse(course, disciplines, terms);
+                res.status(200).json(courseDisciplineList);
                 
             } else {
                 throw new Error;
             }
 
-        } catch (erro){
-            console.log(erro)
+        } catch (err){
+            console.log(err)
             res.status(400).send('Erro')
 
         }
@@ -86,8 +86,8 @@ class CursoController {
                         
             res.status(200).json({curso: courseName, [model]: relations})
                         
-        } catch (erro){
-            console.log(erro)
+        } catch (err){
+            console.log(err)
             res.status(500).json({message: "Ocorreu um erro"})
         
         }

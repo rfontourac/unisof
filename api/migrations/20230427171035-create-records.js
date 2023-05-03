@@ -9,6 +9,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      ClassId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {model: 'Classes', key: 'id'}
+      },
       StudentId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -23,11 +28,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {model: 'Professors', key: 'id'}
-      },
-      ClassId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {model: 'Classes', key: 'id'}
       },
       grade: {
         type: Sequelize.FLOAT

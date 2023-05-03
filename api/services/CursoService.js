@@ -6,20 +6,20 @@ class CursoService extends Service {
         super('Courses')
     }
 
-    async populacurso(idCourse, disciplinas, periodos){
-        const disciplinasMatriculadas = [];
+    async populateCourse(idCourse, disciplines, terms){
+        const registeredDisciplines = [];
         const course = await database[this.nomeDoModelo].findOne({where: {id: idCourse}});
 
-        for (let i=0; i<disciplinas.length; i++){
+        for (let i=0; i<disciplines.length; i++){
             
-            let disciplina = await database['Disciplines'].findOne({where: {id: disciplinas[i]}});
-            let matricula = course.addDiscipline(disciplina, { through: {term: periodos[i] } })
+            let discipline = await database['Disciplines'].findOne({where: { id: disciplines[i]}});
+            let registration = course.addDiscipline(discipline, { through: { term: terms[i] } })
 
-            disciplinasMatriculadas.push({curso: course.name, disciplina: disciplina.name, periodo: periodos[i]});
+            registeredDisciplines.push({curso: course.name, disciplina: discipline.name, periodo: terms[i]});
 
         }
 
-        return disciplinasMatriculadas;
+        return registeredDisciplines;
 
     }
 

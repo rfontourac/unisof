@@ -1,6 +1,7 @@
 const database = require('../models');
 const { AlunoService } = require('../services')
 
+
 const alunoService = new AlunoService;
 
 class AlunoController {
@@ -68,10 +69,20 @@ class AlunoController {
     
     }
 
-    static matriculaEmDisciplina = (req, res) => {
+    static registerToClass = async (req, res) => {
+        try{
+            const newClassRegistration = await alunoService.registerStudentToClass(req.body.studentId,req.body.classId)
+            res.status(200).send(newClassRegistration)
+        
+        } catch (err){
+            res.status(500).send(err.message)
+            
+        }
+
         //cria aluno_turma
-        //cria historico
         //cria aluno_disc
+        //cria historico
+        
     }
 
 

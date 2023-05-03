@@ -7,7 +7,7 @@ const router = Router();
         .get('/cursos', CursoController.buscaCursos)
         .get('/cursos/:id/busca/:model', CursoController.findCourseRelations)
         .post('/cursos', CursoController.criaCursos)
-        .post('/cursos/:id/populacurso', CursoController.populaCurso)
+        .post('/cursos/:id/populacurso', CursoController.populateCourse)
         .put('/cursos/:id', CursoController.alteraCursos)
         .delete('/cursos/:id', CursoController.excluiCursos)
 

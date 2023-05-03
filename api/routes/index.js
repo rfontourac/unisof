@@ -4,6 +4,7 @@ const professores = require('./professorRoutes.js')
 const alunos = require('./alunoRoutes.js')
 const disciplinas = require('./disciplinaRoutes.js')
 const cursos = require('./cursoRoutes.js')
+const classes = require('./classRoutes.js')
 
 
 module.exports = function (app) {
@@ -14,6 +15,7 @@ module.exports = function (app) {
         professores,
         alunos,
         disciplinas,
-        cursos
+        cursos,
+        classes
     )
 }

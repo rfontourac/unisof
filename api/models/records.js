@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   Records.init({
     grade: DataTypes.FLOAT,
     attendance: DataTypes.FLOAT,
-    aproved: DataTypes.BOOLEAN
+    aprooved: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Records',

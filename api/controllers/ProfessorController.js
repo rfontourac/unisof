@@ -1,5 +1,6 @@
+const { restart } = require('nodemon');
 const database = require('../models');
-const { ProfessorService } = require('../services')
+const { ProfessorService, AlunoService } = require('../services')
 
 const professorService = new ProfessorService;
 
@@ -53,8 +54,8 @@ class ProfessorController {
         }
     }
 
-    static criaTurma = async (req, res) => {
-
+    static finishClass = async (req, res) => {
+        
     }
 
     static avaliaAluno = async (req, res) => {

@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Classes.init({
-    datainicio: DataTypes.DATEONLY
+    startdate: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'Classes',
