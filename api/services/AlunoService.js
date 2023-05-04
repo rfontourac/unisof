@@ -34,10 +34,7 @@ class AlunoService extends Service {
 
         }
         
-        const t = await database.sequelize.transaction()
-        
-        try {
-                    
+        await database.sequelize.transaction( async (t) => {
             await student.addClass(studentNewClass, {transaction: t});
             
             if (!(await student.hasDiscipline(discipline))){
@@ -47,27 +44,20 @@ class AlunoService extends Service {
                 await studentDiscipline.update({qttcoursed: studentDiscipline.qttcoursed + 1}, {transaction: t} )
                             
             } else {
-                throw new Error("O aluno já chegou ao limite de tentativas da disciplina.")
+                throw new Error('O aluno já chegou ao limite de tentativas da disciplina.')
                             
             }
             
-            if ( student.Records.filter( e => e.dataValues.ClassId === classId).length === 0 ){
+            if ( student.Records.filter( record => record.dataValues.ClassId === classId).length === 0 ){
                 await database['Records'].create(newRecord, {transaction: t});
                 
             } else {
-                throw new Error('Já existe um registro de histórico desta turma para este aluno')
+                throw new Error('Já existe um registro de histórico desta turma para este aluno.')
 
             }
 
-            t.commit();
-            
-                      
-        } catch (err){
-            t.rollback();
-            return new Error(err.message);
+        })
 
-        }
-    
         return `O aluno ${student.name} foi matriculado na turma ${studentNewClass.id} da disciplina ${discipline.name}`
 
     }

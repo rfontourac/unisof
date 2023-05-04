@@ -1,18 +1,20 @@
 const database = require('../models');
 const { AlunoService } = require('../services')
+const BaseError = require('../errors/BaseError')
 
 
 const alunoService = new AlunoService;
 
 class AlunoController {
-    static buscaAlunos = async (req, res) => {
+    static buscaAlunos = async (req, res, next) => {
         try{
             const params = req.query;
             const todosAlunos = await alunoService.buscaRegistros(params);
             res.status(200).json(todosAlunos);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
+            // res.status(500).send(err.message);
         
         }
     }
@@ -29,7 +31,7 @@ class AlunoController {
         }
     }
 
-    static alteraAlunos = async (req, res) => {
+    static alteraAlunos = async (req, res, next) => {
         try{
             const id = req.params.id
             const novosDados = req.body;
@@ -37,7 +39,7 @@ class AlunoController {
             res.status(200).json(novoAluno);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
@@ -71,12 +73,11 @@ class AlunoController {
 
     static registerToClass = async (req, res) => {
         try{
-            const newClassRegistration = await alunoService.registerStudentToClass(req.body.studentId,req.body.classId)
-            //console.log(newClassRegistration)
+            const newClassRegistration = await alunoService.registerStudentToClass(req.body.studentId, req.body.classId)
             res.status(200).send(newClassRegistration)
         
         } catch (err){
-            res.status(500).send(err.message)
+            res.status(500).send({error: err.message})
             
         }
     }

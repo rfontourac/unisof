@@ -6,7 +6,6 @@ class DepartamentoService extends Service {
         super('Departments')
     }
 
-
 }
 
 module.exports = DepartamentoService

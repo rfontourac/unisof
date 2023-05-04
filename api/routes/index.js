@@ -8,7 +8,7 @@ const classes = require('./classRoutes.js')
 
 
 module.exports = function (app) {
-    
+     
     app.use(
         bodyParser.json(),
         departamentos,

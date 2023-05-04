@@ -1,4 +1,3 @@
-const { restart } = require('nodemon');
 const database = require('../models');
 const { ProfessorService, AlunoService } = require('../services')
 
@@ -58,8 +57,24 @@ class ProfessorController {
         
     }
 
-    static avaliaAluno = async (req, res) => {
+    static evaluateStudent = async (req, res) => {
+        const values = req.body
         
+        try{
+            const updatedRecord = await professorService.evaluateStudent(values)
+            res.status(200).json(
+                {
+                    message: "Aluno avaliado com sucesso", 
+                    nota: updatedRecord.grade, 
+                    frequencia: updatedRecord.attendance, 
+                    aprooved: updatedRecord.aprooved 
+                })
+
+        } catch (err){
+            res.status(500).send(err.message);
+
+        }
+
     }
 
 }

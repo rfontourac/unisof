@@ -1,4 +1,6 @@
 const database = require('../models');
+const Error404 = require('../errors/Error404')
+
 
 class Service {
     constructor(nomeDoModelo){
@@ -14,16 +16,24 @@ class Service {
     }
 
     async alteraRegistro(dados, id) {
+        
+        const registry = await database[this.nomeDoModelo].findOne({
+            where: {
+                id: Number(id)
+            }
+        });
+        
+        if (registry === null){
+            throw new Error404();
+        }
+
         await database[this.nomeDoModelo].update(dados, {
             where: {
                 id: Number(id)
             }
         })
-        return database[this.nomeDoModelo].findOne({
-            where: {
-                id: Number(id)
-            }
-        });
+        
+     
     }
 
     async excluiRegistro(id) {

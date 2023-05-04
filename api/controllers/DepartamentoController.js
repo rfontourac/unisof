@@ -26,8 +26,7 @@ class DepartamentoController {
             res.status(500).send(err.message);
         
         }
-    ///teste
-    
+        
     }
 
     static alteraDepartamentos = async (req, res) => {
@@ -54,11 +53,7 @@ class DepartamentoController {
         
         }
     }
-
-    static cadastrarCurso = async (req, res) => {
-        
-    }
-
+   
 }
 
 module.exports = DepartamentoController
