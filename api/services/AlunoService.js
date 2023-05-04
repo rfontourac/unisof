@@ -21,11 +21,11 @@ class AlunoService extends Service {
 
     async registerStudentToClass(studentId, classId){
         
-        const student = await database[this.nomeDoModelo].findOne( { where: { id: studentId } } )
+        const student = await database[this.nomeDoModelo].findOne( { where: { id: studentId }, include: 'Records' } )
         const studentNewClass = await database['Classes'].findOne( { where: { id: classId } } )
         const discipline = await database['Disciplines'].findOne( { where: { id: studentNewClass.DisciplineId } } );
         const studentDiscipline = await database['Student_discs'].findOne( { where: { DisciplineId: studentNewClass.DisciplineId, StudentId: studentId } } );
-     
+
         const newRecord = {
             StudentId: studentId,
             ClassId: classId,
@@ -33,32 +33,38 @@ class AlunoService extends Service {
             ProfessorId: studentNewClass.ProfessorId,
 
         }
-        // const t = await database.sequelize.transaction()
+        
+        const t = await database.sequelize.transaction()
         
         try {
+                    
+            await student.addClass(studentNewClass, {transaction: t});
             
-            //console.log(await student.hasRecord({where: {StudentId: studentId}}));
-            database.sequelize.transaction( async (t) => {
-                await student.addClass(studentNewClass, {transaction: t});
-                
-                if (!(await student.hasDiscipline(discipline))){
-                    await student.addDiscipline(discipline, { through: {qttcoursed: 1}, transaction: t }  )
-                                                    
-                } else if(studentDiscipline.qttcoursed !== null && studentDiscipline.qttcoursed < 4){
-                    await studentDiscipline.update({qttcoursed: studentDiscipline.qttcoursed + 1}, {transaction: t} )
-                                
-                } else {
-                    throw new Error("O aluno já chegou ao limite de tentativas da disciplina.")
-                                
-                }
-                
+            if (!(await student.hasDiscipline(discipline))){
+                await student.addDiscipline(discipline, { through: {qttcoursed: 1}, transaction: t }  )
+                                                
+            } else if(studentDiscipline.qttcoursed !== null && studentDiscipline.qttcoursed < 4){
+                await studentDiscipline.update({qttcoursed: studentDiscipline.qttcoursed + 1}, {transaction: t} )
+                            
+            } else {
+                throw new Error("O aluno já chegou ao limite de tentativas da disciplina.")
+                            
+            }
+            
+            if ( student.Records.filter( e => e.dataValues.ClassId === classId).length === 0 ){
                 await database['Records'].create(newRecord, {transaction: t});
+                
+            } else {
+                throw new Error('Já existe um registro de histórico desta turma para este aluno')
 
-            })
+            }
+
+            t.commit();
+            
                       
         } catch (err){
-            console.log(err.message)
-            return err;
+            t.rollback();
+            return new Error(err.message);
 
         }
     

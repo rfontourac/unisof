@@ -72,17 +72,13 @@ class AlunoController {
     static registerToClass = async (req, res) => {
         try{
             const newClassRegistration = await alunoService.registerStudentToClass(req.body.studentId,req.body.classId)
+            //console.log(newClassRegistration)
             res.status(200).send(newClassRegistration)
         
         } catch (err){
             res.status(500).send(err.message)
             
         }
-
-        //cria aluno_turma
-        //cria aluno_disc
-        //cria historico
-        
     }
 
 
