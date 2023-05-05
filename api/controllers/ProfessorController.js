@@ -53,8 +53,17 @@ class ProfessorController {
         }
     }
 
-    static finishClass = async (req, res, next) => {
-        
+    static closeClass = async (req, res, next) => {
+        const ClassId = req.params.id
+        try {
+            console.log()
+            const closedClass = await professorService.closeClass(ClassId);
+            res.status(200).json({
+                message: closedClass
+            })
+        } catch (err){
+            next(err);
+        }
     }
 
     static evaluateStudent = async (req, res, next) => {

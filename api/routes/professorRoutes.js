@@ -7,6 +7,7 @@ const router = Router();
         .get('/professores', ProfessorController.buscaProfessores)
         .post('/professores', ProfessorController.criaProfessores)
         .put('/professores/avaliaaluno', ProfessorController.evaluateStudent)
+        .put('/professores/fechaturma/:id', ProfessorController.closeClass)
         .put('/professores/:id', ProfessorController.alteraProfessores)
         .delete('/professores/:id', ProfessorController.excluiProfessores)
 

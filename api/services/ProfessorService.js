@@ -31,7 +31,23 @@ class ProfessorService extends Service {
     }
 
     async closeClass(classId){
+        
+        if (!(await database['Classes'].findOne({where: {id: classId}}))){
+            throw new Error('Turma inexistente.')
+        }
+        
+        const classObject = await database['Classes'].findOne({where: {id: classId}, include: 'Records'})
+        const unavaliatedStudents = classObject.Records.filter(record => record.aprooved === null)
 
+        
+
+        if ( unavaliatedStudents.length != 0){
+            throw new Error('Existem alunos ainda não avaliados na turma.')
+        }
+        
+        await classObject.update({active: false});
+
+        return `A turma de id ${classObject.id} foi encerrada com sucesso.`
     }
 
 }

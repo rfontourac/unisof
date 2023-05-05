@@ -25,8 +25,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Records.init({
-    grade: DataTypes.FLOAT,
-    attendance: DataTypes.FLOAT,
+    grade: {
+      type: DataTypes.FLOAT,
+      validate: {
+        validateGrade(data){
+          console.log('passou')
+          if ( data < 0 || data > 10 ) throw new Error('A nota deve ser representada entre 0 e 10')
+        }
+      }
+    },
+    attendance: {
+      type: DataTypes.FLOAT,
+      validate: {
+        validateAttendance: function(data){
+          if ( data < 0 || data > 1) throw new Error('A frequência deve ser representada entre 0 e 1')
+        }
+      }
+    },
     aprooved: DataTypes.BOOLEAN
   }, {
     sequelize,

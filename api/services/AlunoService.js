@@ -21,22 +21,25 @@ class AlunoService extends Service {
 
     async registerStudentToClass(studentId, classId){
         
-        const student = await database[this.nomeDoModelo].findOne( { where: { id: studentId }, include: 'Records' } )
+        const student = await database[this.nomeDoModelo].findOne( { where: { id: studentId } } )
         const studentNewClass = await database['Classes'].findOne( { where: { id: classId } } )
         
         if (!student || !studentNewClass){
-            throw new Error('Id de estudante ou Id de turma incorreto.')
+            throw new Error('Id de estudante ou Id de turma incorreto.', {cause: 400})
         }
-
+        
         const discipline = await database['Disciplines'].findOne( { where: { id: studentNewClass.DisciplineId } } );
         const studentDiscipline = await database['Student_discs'].findOne( { where: { DisciplineId: studentNewClass.DisciplineId, StudentId: studentId } } );
+        
+        if ( await student.hasClass(studentNewClass)){
+            throw new Error('Usuário já está matriculado na turma.', {cause: 400})
+        }
 
         const newRecord = {
             StudentId: studentId,
             ClassId: classId,
             DisciplineId: studentNewClass.DisciplineId,
             ProfessorId: studentNewClass.ProfessorId,
-
         }
         
         await database.sequelize.transaction( async (t) => {
@@ -49,19 +52,12 @@ class AlunoService extends Service {
                 await studentDiscipline.update({qttcoursed: studentDiscipline.qttcoursed + 1}, {transaction: t} )
                             
             } else {
-                throw new Error('O aluno já chegou ao limite de tentativas da disciplina.')
+                throw new Error('O aluno já chegou ao limite de tentativas da disciplina.', {cause: 400})
                             
             }
+            await student.createRecord(newRecord, {transaction: t})
             
-            if ( student.Records.filter( record => record.dataValues.ClassId === classId).length === 0 ){
-                await database['Records'].create(newRecord, {transaction: t});
-                
-            } else {
-                throw new Error('Já existe um registro de histórico desta turma para este aluno.')
-                
-            }
-
-        })
+          })
 
         return `O aluno ${student.name} foi matriculado na turma ${studentNewClass.id} da disciplina ${discipline.name}`
 

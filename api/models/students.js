@@ -25,9 +25,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Students.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        validateName: function(data){
+          if (data.length < 3 ) throw new Error('O campo nome deve ter ao menos 3 caracteres')
+        }
+      }
+    },
     phone: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Dados de email inválidos'
+        }
+      }
+    },
     graduationdate: DataTypes.DATEONLY,
     active: DataTypes.BOOLEAN
   }, {

@@ -14,7 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Course_discs.init({
-    term: DataTypes.INTEGER
+    term: { 
+      type: DataTypes.INTEGER,
+      validate: {
+        validateTerm: function(data){
+          if (data < 1 && data > 12) throw new Error('O valor do período deve estar entre 1 e 12')
+        }
+      }
+
+    }
   }, {
     sequelize,
     modelName: 'Course_discs',
