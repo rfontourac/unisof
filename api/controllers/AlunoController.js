@@ -14,20 +14,19 @@ class AlunoController {
 
         } catch (err){
             next(err);
-            // res.status(500).send(err.message);
-        
+                    
         }
     }
     
-    static criaAlunos = async (req, res) => {
+    static criaAlunos = async (req, res, next) => {
         try{
             const novosDados = req.body;
             const novoAluno = await alunoService.adicionaRegistro(novosDados);
             res.status(200).json(novoAluno);
 
         } catch (err){
-            res.status(500).send(err.message);
-        
+            next(err)
+                    
         }
     }
 
@@ -44,19 +43,19 @@ class AlunoController {
         }
     }
 
-    static excluiAlunos = async (req, res) => {
+    static excluiAlunos = async (req, res, next) => {
         try{
             const id = req.params.id
             await alunoService.excluiRegistro(id);
             res.status(200).json({message: `O Aluno de id ${id} foi excluído`});
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static registerStudentInCourse = async (req, res) => {
+    static registerStudentInCourse = async (req, res, next) => {
         try {
             const studentId = req.body.studentId
             const courseId = req.body.courseId
@@ -65,19 +64,19 @@ class AlunoController {
             res.status(200).send(alunoMatriculado);
             
 
-        } catch (erro){
-            res.status(500).json({message: "Ocorreu um erro"})
+        } catch (err){
+            next(err);
         }
     
     }
 
-    static registerToClass = async (req, res) => {
+    static registerToClass = async (req, res, next) => {
         try{
             const newClassRegistration = await alunoService.registerStudentToClass(req.body.studentId, req.body.classId)
             res.status(200).send(newClassRegistration)
         
         } catch (err){
-            res.status(500).send({error: err.message})
+            next(err);
             
         }
     }

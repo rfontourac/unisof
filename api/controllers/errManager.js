@@ -10,7 +10,10 @@ function errManager (err, req, res, next) {
     } else if (err instanceof Error404) {
         err.sendMessage(res);
     }else{
-        new BaseError().sendMessage(res);
+        console.log(err.name)
+        new BaseError(err.message).sendMessage(res);
+        
+        //res.status(500).send(err)
     
     }
 }

@@ -4,31 +4,31 @@ const { CursoService } = require('../services')
 const cursoService = new CursoService;
 
 class CursoController {
-    static buscaCursos = async (req, res) => {
+    static buscaCursos = async (req, res, next) => {
         try{
             const params = req.query;
             const todosCursos = await cursoService.buscaRegistros(params);
             res.status(200).json(todosCursos);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
     
-    static criaCursos = async (req, res) => {
+    static criaCursos = async (req, res, next) => {
         try{
             const novosDados = req.body;
             const novoCurso = await cursoService.adicionaRegistro(novosDados);
             res.status(200).json(novoCurso);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static alteraCursos = async (req, res) => {
+    static alteraCursos = async (req, res, next) => {
         try{
             const id = req.params.id
             const novosDados = req.body;
@@ -36,24 +36,24 @@ class CursoController {
             res.status(200).json(novoCurso);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static excluiCursos = async (req, res) => {
+    static excluiCursos = async (req, res, next) => {
         try{
             const id = req.params.id
             await cursoService.excluiRegistro(id);
             res.status(200).json({message: `O Curso de id ${id} foi excluído`});
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static populateCourse = async (req, res) => {
+    static populateCourse = async (req, res, next) => {
         try{
             const lists = req.body;
             const course = req.params.id
@@ -69,14 +69,13 @@ class CursoController {
             }
 
         } catch (err){
-            console.log(err)
-            res.status(400).send('Erro')
+            next(err);
 
         }
 
     }
 
-    static findCourseRelations = async (req, res) => {
+    static findCourseRelations = async (req, res, next) => {
         const idCourse = req.params.id
         const model = req.params.model
         try {
@@ -87,12 +86,10 @@ class CursoController {
             res.status(200).json({curso: courseName, [model]: relations})
                         
         } catch (err){
-            console.log(err)
-            res.status(500).json({message: "Ocorreu um erro"})
+            next(err);
         
         }
     }
-
 
 }
 

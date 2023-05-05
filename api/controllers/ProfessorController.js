@@ -4,31 +4,31 @@ const { ProfessorService, AlunoService } = require('../services')
 const professorService = new ProfessorService;
 
 class ProfessorController {
-    static buscaProfessores = async (req, res) => {
+    static buscaProfessores = async (req, res, next) => {
         try{
             const params = req.query
             const todosProfessores = await professorService.buscaRegistros(params);
             res.status(200).json(todosProfessores);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
     
-    static criaProfessores = async (req, res) => {
+    static criaProfessores = async (req, res, next) => {
         try{
             const novosDados = req.body;
             const novoProfessor = await professorService.adicionaRegistro(novosDados);
             res.status(200).json(novoProfessor);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static alteraProfessores = async (req, res) => {
+    static alteraProfessores = async (req, res, next) => {
         try{
             const id = req.params.id
             const novosDados = req.body;
@@ -36,28 +36,28 @@ class ProfessorController {
             res.status(200).json(novoProfessor);
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static excluiProfessores = async (req, res) => {
+    static excluiProfessores = async (req, res, next) => {
         try{
             const id = req.params.id
             await professorService.excluiRegistro(id);
             res.status(200).json({message: `O Professor de id ${id} foi excluído`});
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
         
         }
     }
 
-    static finishClass = async (req, res) => {
+    static finishClass = async (req, res, next) => {
         
     }
 
-    static evaluateStudent = async (req, res) => {
+    static evaluateStudent = async (req, res, next) => {
         const values = req.body
         
         try{
@@ -71,7 +71,7 @@ class ProfessorController {
                 })
 
         } catch (err){
-            res.status(500).send(err.message);
+            next(err);
 
         }
 

@@ -23,6 +23,11 @@ class AlunoService extends Service {
         
         const student = await database[this.nomeDoModelo].findOne( { where: { id: studentId }, include: 'Records' } )
         const studentNewClass = await database['Classes'].findOne( { where: { id: classId } } )
+        
+        if (!student || !studentNewClass){
+            throw new Error('Id de estudante ou Id de turma incorreto.')
+        }
+
         const discipline = await database['Disciplines'].findOne( { where: { id: studentNewClass.DisciplineId } } );
         const studentDiscipline = await database['Student_discs'].findOne( { where: { DisciplineId: studentNewClass.DisciplineId, StudentId: studentId } } );
 
@@ -40,7 +45,7 @@ class AlunoService extends Service {
             if (!(await student.hasDiscipline(discipline))){
                 await student.addDiscipline(discipline, { through: {qttcoursed: 1}, transaction: t }  )
                                                 
-            } else if(studentDiscipline.qttcoursed !== null && studentDiscipline.qttcoursed < 4){
+            } else if(studentDiscipline.qttcoursed < 4){
                 await studentDiscipline.update({qttcoursed: studentDiscipline.qttcoursed + 1}, {transaction: t} )
                             
             } else {
@@ -53,7 +58,7 @@ class AlunoService extends Service {
                 
             } else {
                 throw new Error('Já existe um registro de histórico desta turma para este aluno.')
-
+                
             }
 
         })
