@@ -1,4 +1,3 @@
-const { NOW } = require('sequelize');
 const database = require('../models');
 const Service = require('./Service')
 

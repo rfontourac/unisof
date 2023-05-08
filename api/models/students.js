@@ -29,17 +29,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         validateName: function(data){
-          if (data.length < 3 ) throw new Error('O campo nome deve ter ao menos 3 caracteres')
+          if (data.length < 2 ) throw new Error('O campo nome deve ter ao menos 2 caracteres')
         }
       }
     },
-    phone: DataTypes.STRING,
+    phone: {
+      type: DataTypes.STRING,
+      validate: {
+        validatePhone: function(data){
+          const regex = new RegExp(/\(\d{2}\)\d{4,5}\-?\d{4}/, "g")
+          const found = data.match(regex)
+          if (!found) throw new Error('Dados de telefone devem seguir o padrão de telefone com DDD')
+        }
+      }
+    },
     email: {
       type: DataTypes.STRING,
       validate: {
         isEmail: {
           args: true,
-          msg: 'Dados de email inválidos'
+          msg: 'O campo deve conter um endereço de email'
         }
       }
     },

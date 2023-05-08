@@ -19,7 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Departments.init({
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        validateName: function(data){
+          if (data.length < 2 ) throw new Error('O campo nome deve ter ao menos 2 caracteres')
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Departments',
